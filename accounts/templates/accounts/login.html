@@ -1,0 +1,30 @@
+{% extends "global/base.html" %}
+{% load static %}
+
+{% block additional_style %}
+    <link rel="stylesheet" href="{% static "accounts/css/register.css" %}">
+{% endblock additional_style %}
+
+{% block content %}
+<section id="register-user" class="full-page centralized-content">
+    <div class="main-content text-center">
+        <form class="form">
+            <p class="title">Entrar</p>
+            <p class="message">Informe suas crêdencias para acessar nossos serviços </p>
+                    
+            <label>
+                <input required="" name="email" placeholder="" type="email" 
+                class="input" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$">
+                <span>Email</span>
+            </label> 
+                
+            <label>
+                <input required="" name="password" placeholder="" type="password" class="input">
+                <span>Senha</span>
+            </label>
+            <button class="submit">Entrar</button>
+            <p class="signin">Ainda não tem uma conta? <a href="#">Registre-se</a> </p>
+        </form>
+    </div>
+</section>
+{% endblock content %}

@@ -1,0 +1,50 @@
+{% extends "global/base.html" %}
+{% load static %}
+
+{% block additional_style %}
+    <link rel="stylesheet" href="{% static "accounts/css/register.css" %}">
+{% endblock additional_style %}
+
+{% block content %}
+<section id="register-user" class="full-page centralized-content">
+    <div class="main-content text-center">
+        <form class="form" method="POST", action="{% url "accounts:register" %}">
+            {% csrf_token %}
+            <p class="title">Cadastro </p>
+            <p class="message">Cadastre-se agora e tenha acesso total ao nossos serviços. </p>
+                <div class="flex">
+                <label>
+                    <input required="" name="first_name" placeholder="" type="text" class="input"
+                    maxlength="30" minlength="2" value="{{form_values.first_name}}">
+                    <span>Nome</span>
+                </label>
+        
+                <label>
+                    <input required="" name="last_name" placeholder="" type="text" class="input"
+                    maxlength="30" minlength="2" value="{{form_values.last_name}}">
+                    <span>Sobrenome</span>
+                </label>
+            </div>  
+                    
+            <label>
+                <input required="" name="email" placeholder="" type="email" 
+                class="input" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" value="{{form_values.email}}">
+                <span>Email</span>
+            </label> 
+                
+            <label>
+                <input required="" name="password" placeholder="" type="password" class="input"
+                maxlength="30" minlength="8">
+                <span>Senha</span>
+            </label>
+            <label>
+                <input required="" name="password2" placeholder="" type="password" class="input"
+                maxlength="30" minlength="8">
+                <span>Confirmação da senha</span>
+            </label>
+            <button class="submit">Registrar</button>
+            <p class="signin">Já tem uma conta? <a href="#">Entrar</a> </p>
+        </form>
+    </div>
+</section>
+{% endblock content %}

@@ -1,0 +1,48 @@
+{% extends "global/base.html" %}
+{% load static %}
+
+{% block additional_style %}
+    <link rel="stylesheet" href="{% static "accounts/css/register.css" %}">
+{% endblock additional_style %}
+
+{% block content %}
+<section id="register-user" class="full-page centralized-content">
+    <div class="main-content text-center">
+        <form class="form">
+            {% csrf_token %}
+            <p class="title">Verificação</p>
+            <p class="message">digite seu e-mail e o token de validação</p>
+
+            <label>
+                <input required="" name="email" placeholder="" type="email" 
+                class="input" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$">
+                <span>Email</span>
+            </label> 
+
+            <div class="flex">
+                <label>
+                    <input type="text" class="token-input input" name="d1" maxlength="1" pattern="[a-zA-Z0-9]" required>
+                </label>
+                <label>
+                    <input type="text" class="token-input input" name="d2" maxlength="1" pattern="[a-zA-Z0-9]" required>
+                </label>
+                <label>
+                    <input type="text" class="token-input input" name="d3" maxlength="1" pattern="[a-zA-Z0-9]" required>
+                </label>
+                <label>
+                    <input type="text" class="token-input input" name="d4" maxlength="1" pattern="[a-zA-Z0-9]" required>
+                </label>
+                <label>
+                    <input type="text" class="token-input input" name="d5" maxlength="1" pattern="[a-zA-Z0-9]" required>
+                </label>
+                <label>
+                    <input type="text" class="token-input input" name="d6" maxlength="1" pattern="[a-zA-Z0-9]" required>
+                </label>
+            </div>  
+                    
+            <button class="submit">Registrar</button>
+            <p class="signin">Já tem uma conta? <a href="#">Entrar</a> </p>
+        </form>
+    </div>
+</section>
+{% endblock content %}
