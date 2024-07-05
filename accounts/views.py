@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from utils import validators as va
+from utils.rands import random_letters
 from accounts.models import CustomUser
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
@@ -24,6 +25,17 @@ def register(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         password2 = request.POST.get('password2')
+
+        try:
+            user = CustomUser.objects.get(email=email)
+            if user.is_check:
+                messages.warning(request, 'E-mail já registrado, faça login')
+                return redirect('accounts:login')
+            else:
+                messages.warning(request, 'E-mail já registrado, verifique seu E-mail')
+                return redirect('accounts:check_email')
+        except CustomUser.DoesNotExist:
+            pass
 
         context.update({
             'form_values': {
@@ -116,7 +128,7 @@ def register(request):
                 'Conta criada! Verifique seu E-mail para obter o token de atentificação'
             )
 
-            return redirect("accounts:login")
+            return redirect("accounts:check_email")
 
     return render(request, 'accounts/register.html', context)
 
@@ -127,6 +139,45 @@ def check_email(request):
             'title': 'Verificação de E-mail',
         }
     }
+
+    if request.method == "POST":
+
+        email = request.POST.get('email')
+
+        context.update({
+            'form_values': {
+                'email': email,
+            },
+        })
+
+        d1 = request.POST.get('d1')
+        d2 = request.POST.get('d2')
+        d3 = request.POST.get('d3')
+        d4 = request.POST.get('d4')
+        d5 = request.POST.get('d5')
+        d6 = request.POST.get('d6')
+
+        token = d1 + d2 + d3 + d4 + d5 + d6
+        try:
+            user = CustomUser.objects.get(email=email)
+
+            if user.is_check:
+                messages.warning(request, 'E-mail já verificado, faça login')
+                return redirect('accounts:login')
+
+            if token == user.token:
+                user.is_check = True
+                user.token = random_letters(6)
+                user.save()
+                messages.success(
+                    request,
+                    'E-mail confirmado com sucesso!, agora faça login'
+                )
+                return redirect('accounts:login')
+            else:
+                messages.error(request, 'Token invalido, tente novamente')
+        except CustomUser.DoesNotExist:
+            messages.erro(request, 'Não exitem solicitações para esse E-mail')
 
     return render(request, 'accounts/check_email.html', context)
 

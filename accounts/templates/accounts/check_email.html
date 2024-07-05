@@ -8,13 +8,13 @@
 {% block content %}
 <section id="register-user" class="full-page centralized-content">
     <div class="main-content text-center">
-        <form class="form">
+        <form class="form" method="POST" action="{% url "accounts:check_email" %}">
             {% csrf_token %}
             <p class="title">Verificação</p>
             <p class="message">digite seu e-mail e o token de validação</p>
 
             <label>
-                <input required="" name="email" placeholder="" type="email" 
+                <input required="" name="email" placeholder="" type="email" value="{{form_values.email}}"
                 class="input" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$">
                 <span>Email</span>
             </label> 
