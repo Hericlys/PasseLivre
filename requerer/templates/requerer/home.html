@@ -1,0 +1,56 @@
+{% extends "global/base.html" %}
+{% load static %}
+
+{% block additional_style %}
+    <link rel="stylesheet" href="{% static "requerer/css/home.css" %}">
+{% endblock additional_style %}
+
+{% block content %}
+    <section id="home" class="full-page centralized-content">
+        <div class="main-content text-center">
+            <div class='home-info-container'>
+                <h2 class='home-title'>REQUERIMENTO DE CARTEIRA DE PASSE LIVRE E CIPTEA</h2>
+                <p class='home-law'>PARA O TRANSPORTE INTERMUNICIPAL DE PESSOA COM DEFICIÊNCIA garantido pela Lei nº7.529/2004.</p>
+                <p class='home-law'>PARA CARTEIRA DE IDENTIFICAÇÃO DA PESSOA COM TRANSTORNO DO ESPECTRO AUTISTA (CIPTEA) garantida pela Lei 13.977/20.</p>
+                <h3 class="home-sub-title">Selecione uma opção para prosseguir:</h3>
+            </div>
+            <div class="home-links-container">
+                <a href="{% url "requerer:new_request" %}">
+                    <div class="home-link">
+                        <i class="fa-solid fa-plus"></i>
+                        <p>Novo requerimento</p>
+                    </div>
+                </a>
+                <a href="#">
+                    <div class="home-link">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <p>Consultar</p>
+                    </div>
+                </a>
+                <a href="#">
+                    <div class="home-link">
+                        <i class="fa-solid fa-gears"></i>
+                        <p>Corrigir</p>
+                    </div>
+                </a>
+                <a href="#">
+                    <div class="home-link">
+                        <i class="fa-solid fa-2"></i>
+                        <p>Segunda via</p>
+                    </div>
+                </a>
+                <a href="#">
+                    <div class="home-link">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        <p>Agendar</p>
+                    </div>
+                </a>
+            </div>
+            <div class='default-form-download-container'>
+                <a class="default-form-download" href="{% static "requerer/docs/modelo_laudo.pdf" %}" target="_blank">
+                    Clique aqui para obter o Formulário padrão
+                </a>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

@@ -130,8 +130,8 @@ def register(request):
                 request,
                 'Conta criada! Verifique seu E-mail para obter o token de atentificação'
             )
-
-            return redirect("accounts:check_email")
+            # redirecionar para o next
+            return redirect("requerer:new_request")
 
     return render(request, 'accounts/register.html', context)
 
