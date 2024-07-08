@@ -52,8 +52,10 @@
             <nav class="menu-nav">
                 <ul class="menu-links-container">
                     {% if not user.is_authenticated %}
-                        <li><a href="{% url "accounts:login" %}" class="menu-link ">Entrar</a></li>
-                        <li><a href="{% url "accounts:register" %}" class="menu-link ">Cadastre-se</a></li>
+                        <li><a href="{% url "accounts:login" %}" class="menu-link">Entrar</a></li>
+                        <li><a href="{% url "accounts:register" %}" class="menu-link">Cadastre-se</a></li>
+                    {% else %}
+                        <li><a href="{% url "accounts:logout" %}" class="menu-link">Sair</a></li>
                     {% endif %}
                     {% block menu_links %}{% endblock menu_links %}
                 </ul>

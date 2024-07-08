@@ -6,6 +6,8 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.utils.html import strip_tags
 from django.contrib import messages
 from django.conf import settings
@@ -77,6 +79,7 @@ def register(request):
 
         try:
             validate_email(email)
+            user = CustomUser.objects.get(email=email)
             # verificar se o e-mail já existe em nosso sistema
         except ValidationError:
             is_valid = False
@@ -182,11 +185,27 @@ def check_email(request):
     return render(request, 'accounts/check_email.html', context)
 
 
-def login(request):
+def login_view(request):
     context = {
         'page_settings': {
             'title': 'Login',
         }
     }
 
+    if request.method == "POST":
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=email, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('accounts:register') #modificar para home do site
+        else:
+            messages.error(request, 'Credenciais invalidas')
     return render(request, 'accounts/login.html', context)
+
+
+@login_required(login_url='accounts:login')
+def logout_view(request):
+    logout(request)
+    return redirect('accounts:login')

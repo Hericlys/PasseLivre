@@ -8,7 +8,8 @@
 {% block content %}
 <section id="register-user" class="full-page centralized-content">
     <div class="main-content text-center">
-        <form class="form">
+        <form class="form" method="POST" action="{% url "accounts:login" %}">
+            {% csrf_token %}
             <p class="title">Entrar</p>
             <p class="message">Informe suas crêdencias para acessar nossos serviços </p>
                     
@@ -23,7 +24,7 @@
                 <span>Senha</span>
             </label>
             <button class="submit">Entrar</button>
-            <p class="signin">Ainda não tem uma conta? <a href="#">Registre-se</a> </p>
+            <p class="signin">Ainda não tem uma conta? <a href="{% url "accounts:register" %}">Registre-se</a> </p>
         </form>
     </div>
 </section>
