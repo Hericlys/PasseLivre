@@ -34,7 +34,7 @@ def register(request):
                 messages.warning(request, 'E-mail já registrado, faça login')
                 return redirect('accounts:login')
             else:
-                messages.warning(request, 'E-mail já registrado, verifique seu E-mail')
+                messages.warning(request, 'Verifique seu E-mail informando o Token de acesso')
                 return redirect('accounts:check_email')
         except CustomUser.DoesNotExist:
             pass
@@ -79,8 +79,6 @@ def register(request):
 
         try:
             validate_email(email)
-            user = CustomUser.objects.get(email=email)
-            # verificar se o e-mail já existe em nosso sistema
         except ValidationError:
             is_valid = False
             messages.error(request, 'E-mail invalido, tente outro.')
@@ -101,10 +99,11 @@ def register(request):
         if is_valid:
             new_user = CustomUser.objects.create(
                 email=email,
-                password=password,
                 first_name=first_name,
                 last_name=last_name,
             )
+            new_user.set_password(password)
+            new_user.save()
 
             # send e-mail
             html_content = render_to_string(
@@ -130,8 +129,7 @@ def register(request):
                 request,
                 'Conta criada! Verifique seu E-mail para obter o token de atentificação'
             )
-            # redirecionar para o next
-            return redirect("requerer:new_request")
+            return redirect("accounts:check_email")
 
     return render(request, 'accounts/register.html', context)
 
@@ -198,8 +196,12 @@ def login_view(request):
 
         user = authenticate(request, username=email, password=password)
         if user is not None:
-            login(request, user)
-            return redirect('accounts:register') #modificar para home do site
+            if user.is_check:
+                login(request, user)
+                return redirect('requerer:home')
+            else:
+                messages.error(request, 'E-mail não validado, valide seu E-mail para continuar')
+                return redirect('accounts:check_email')
         else:
             messages.error(request, 'Credenciais invalidas')
     return render(request, 'accounts/login.html', context)
