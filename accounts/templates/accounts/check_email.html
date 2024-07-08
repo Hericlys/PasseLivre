@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block additional_style %}
-    <link rel="stylesheet" href="{% static "accounts/css/register.css" %}">
+    <link rel="stylesheet" href="{% static "accounts/css/accounts_forms.css" %}">
 {% endblock additional_style %}
 
 {% block content %}
@@ -46,3 +46,7 @@
     </div>
 </section>
 {% endblock content %}
+
+{% block additional_script %}
+    <script src="{% static 'accounts/js/check_email.js' %}"></script>
+{% endblock additional_script %}

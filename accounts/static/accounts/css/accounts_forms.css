@@ -129,3 +129,8 @@
       opacity: 0;
     }
 }
+
+.token-input {
+    text-align: center;
+    font-weight: bold;
+}
