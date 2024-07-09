@@ -1,1 +1,174 @@
-<h1>New request</h1>
+{% extends "global/base.html" %}
+{% load static %}
+
+{% block additional_style %}
+    <link rel="stylesheet" href="{% static "requerer/css/new_request.css" %}">
+{% endblock additional_style %}
+
+{% block content %}
+    <section id="new-request" class="full-page centralized-content">
+        <div class="main-content text-center">
+            <form class="form" method="POST" action="{% url "requerer:new_request" %}">
+                {% csrf_token %}
+                <p class="title">Novo requerimento</p>
+                <p class="message">Preencha seus dados com atenção para evitar erros</p>
+
+                <label>
+                    <input required="" name="full-name" placeholder="" type="text" value=""
+                    class="input" minlength="10">
+                    <span>Nome completo</span>
+                </label>
+                <div class="flex">
+                    <label>
+                        <input required="" name="cpf" placeholder="" type="text" value=""
+                        class="input number" minlength="11" maxlength="11">
+                        <span>CPF</span>
+                    </label> 
+                    <label>
+                        <input required="" name="data_nascimento" placeholder="" type="date" value=""
+                        class="input">
+                        <span>Data de nascimento</span>
+                    </label>
+                    <label>
+                        <select required="" name="sexo" class="input">
+                            {% for value, text in forms_choices.sexo %}
+                                <option value="{{value}}">{{text}}</option>
+                            {% endfor %}    
+                        </select>
+                        <span>Sexo</span>
+                    </label>
+                </div>  
+                <div class="flex">
+                    <label>
+                        <input required="" name="rg" placeholder="" type="text" value=""
+                        class="input" minlength="3" maxlength="25">
+                        <span>RG</span>
+                    </label>
+                    <label>
+                        <input required="" name="orgao-emissor" placeholder="" type="text" value=""
+                        class="input" minlength="3" maxlength="8">
+                        <span>Orão emissor RG</span>
+                    </label>
+                    <label>
+                        <select required="" name="uf-rg" class="input">
+                            {% for value, text in forms_choices.uf %}
+                                <option value="{{value}}">{{value}}</option>
+                            {% endfor %}    
+                        </select>
+                        <span>UF RG</span>
+                    </label>
+                </div>
+                <div class="flex">
+                    <label>
+                        <input required="" name="local-nascimento" placeholder="" type="text" value=""
+                        class="input" minlength="10">
+                        <span>Local nascimento</span>
+                    </label>
+                    <label>
+                        <select required="" name="raca" class="input">
+                            {% for value, text in forms_choices.raca %}
+                                <option value="{{value}}">{{text}}</option>
+                            {% endfor %}    
+                        </select>
+                        <span>Raça | cor</span>
+                    </label>
+                    <label>
+                        <select required="" name="sangue" class="input">
+                            {% for value, text in forms_choices.sangue %}
+                                <option value="{{value}}">{{text}}</option>
+                            {% endfor %}    
+                        </select>
+                        <span>Tipo sanguinêo</span>
+                    </label>
+                </div>
+                <div class="flex">
+                    <label>
+                        <input required="" name="nome-mae" placeholder="" type="text" value=""
+                        class="input">
+                        <span>Nome da mãe</span>
+                    </label>
+                    <label>
+                        <input name="nome-pai" placeholder="" type="text" value=""
+                        class="input">
+                        <span>Nome do pai</span>
+                    </label> 
+                </div>
+                <div class="flex">
+                    <label>
+                        <select required="" name="tipo-cid" class="input">
+                            {% for value, text in forms_choices.cid %}
+                                <option value="{{value}}">{{text}}</option>
+                            {% endfor %}    
+                        </select>
+                        <span>tipo de CID</span>
+                    </label>
+                    <label>
+                        <input name="cid" placeholder="" type="text" value=""
+                        class="input" minlength="3">
+                        <span>CID</span>
+                    </label> 
+                    <label>
+                        <select required="" name="deficiencia" class="input">
+                            {% for value, text in forms_choices.deficiencia %}
+                                <option value="{{value}}">{{text}}</option>
+                            {% endfor %}    
+                        </select>
+                        <span>Deficiência</span>
+                    </label>
+                    <label>
+                        <input required="" name="telefone" placeholder="" type="tel" value=""
+                        class="input" minlength="15" maxlength="15">
+                        <span>Telefone</span>
+                    </label> 
+                </div>
+                <div class="flex">
+                    <label>
+                        <input required="" name="CEP" placeholder="" type="text" value=""
+                        class="input number">
+                        <span>CEP</span>
+                    </label>
+                    <label>
+                        <input name="logradouro" placeholder="" type="tel" value=""
+                        class="input">
+                        <span>Logradouro</span>
+                    </label>
+                    <label>
+                        <input required="" name="numero" placeholder="" type="text" value=""
+                        class="input number">
+                        <span>N°</span>
+                    </label>
+                </div>
+                <div class="flex">
+                    <label>
+                        <input required="" name="cidade" placeholder="" type="text" value=""
+                        class="input">
+                        <span>Cidade</span>
+                    </label>
+                    <label>
+                        <input name="bairro" placeholder="" type="tel" value=""
+                        class="input">
+                        <span>Bairro</span>
+                    </label>
+                    <label>
+                        <select required="" name="uf-endereco" class="input">
+                            {% for value, text in forms_choices.uf %}
+                                <option value="{{value}}">{{value}}</option>
+                            {% endfor %}    
+                        </select>
+                        <span>UF</span>
+                    </label> 
+                </div>
+                <label>
+                    <input required="" name="complemento" placeholder="" type="text" value=""
+                    class="input">
+                    <span>Complemento</span>
+                </label>
+                
+                <button class="submit">Enviar</button>
+            </form>
+        </div>
+    </section>
+{% endblock content %}
+{% block additional_script %}
+    <script src="{% static "requerer/js/new_request.js" %}"></script>
+{% endblock additional_script %}

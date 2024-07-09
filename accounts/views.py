@@ -207,7 +207,6 @@ def login_view(request):
     return render(request, 'accounts/login.html', context)
 
 
-@login_required(login_url='accounts:login')
 def logout_view(request):
     logout(request)
     return redirect('accounts:login')
