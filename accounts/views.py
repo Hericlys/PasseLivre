@@ -7,7 +7,6 @@ from django.template.loader import render_to_string
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from django.utils.html import strip_tags
 from django.contrib import messages
 from django.conf import settings
@@ -129,6 +128,7 @@ def register(request):
                 request,
                 'Conta criada! Verifique seu E-mail para obter o token de atentificação'
             )
+            print(f'---- You token is "{new_user.token}" ----')
             return redirect("accounts:check_email")
 
     return render(request, 'accounts/register.html', context)
@@ -178,7 +178,7 @@ def check_email(request):
             else:
                 messages.error(request, 'Token invalido, tente novamente')
         except CustomUser.DoesNotExist:
-            messages.erro(request, 'Não exitem solicitações para esse E-mail')
+            messages.error(request, 'Não exitem solicitações para esse E-mail')
 
     return render(request, 'accounts/check_email.html', context)
 

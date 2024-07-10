@@ -95,10 +95,16 @@ class Request(models.Model):
     impressa = models.BooleanField(default=False, editable=False)
 
     analista = models.ForeignKey(
-        CustomUser, on_delete=models.SET_NULL, null=True, blank=True, editable=False
+        CustomUser, on_delete=models.SET_NULL, null=True, blank=True, editable=False,
+        related_name='requests_as_analista'
     )
 
     slug = models.SlugField(unique=True)
+
+    user = models.ForeignKey(
+        CustomUser, on_delete=models.SET_NULL, null=True,
+        related_name='requests_as_user'
+    )
 
     def __str__(self):
         return self.nome_completo
