@@ -65,7 +65,7 @@ def new_request(request):
             except:
                 print(f'user não localizado por ----{request.user.email}----')
 
-            new_request = Request.objects.create(
+            new_request = Request(
                 nome_completo=name, cpf=cpf, data_nascimento=d_nascimento,
                 nome_mae=n_mae, nome_pai=n_pai, orgao_emissor=emissor,
                 uf_rg=uf_rg, rg=rg, local_nascimento=l_nascimento, sexo=sexo,
@@ -75,6 +75,7 @@ def new_request(request):
                 numero=numero, complemento=complemento, bairro=bairro,
                 cidade=cidade, uf=uf_endereco, user=user
             )
+            new_request.save()
             messages.success(request, 'Requerimento realizado com sucesso')
         else:
             messages.error(request, 'CPF invalido')
