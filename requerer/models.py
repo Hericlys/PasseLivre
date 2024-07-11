@@ -116,7 +116,7 @@ class Request(models.Model):
         return super().save(*args, **kwargs)
 
 
-class Documentos(models.Model):
+class Documents(models.Model):
     requirement = models.OneToOneField(Request, on_delete=models.CASCADE)
     foto_3x4 = models.ImageField(upload_to='documentos/foto_3x4/%M/')
     rg_frente = models.ImageField(upload_to='documentos/rg_frente/%M/')

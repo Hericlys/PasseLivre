@@ -4,7 +4,7 @@ from requerer.models import Request
 from utils.validators import validate_cpf
 from utils.data_processing import clean_space
 from django.contrib import messages
-from requerer.models import Request
+from requerer.models import Request, Documents
 from accounts.models import CustomUser
 
 
@@ -137,6 +137,8 @@ def send_docs(request, slug):
             audiometria = request.POST.get('audiometria')
         sangue = request.POST.get('tipo-sangue')
         foto_3x4 = request.POST.get('3x4')
+
+
 
         
 
