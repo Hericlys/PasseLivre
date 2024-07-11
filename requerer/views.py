@@ -126,6 +126,18 @@ def send_docs(request, slug):
     }
     
     if request.method == "POST":
-        pass
+        rg_frente = request.POST.get('rg-frente')
+        rg_verso = request.POST.get('rg-verso')
+        cpf = request.POST.get('cpf')
+        laudo_frente = request.POST.get('laudo-frente')
+        laudo_verso = request.POST.get('laudo-verso')
+        compr_res = request.POST.get('comp-res')
+        audiometria = None
+        if requirement.deficiencia_tipo == "AUD":
+            audiometria = request.POST.get('audiometria')
+        sangue = request.POST.get('tipo-sangue')
+        foto_3x4 = request.POST.get('3x4')
+
+        
 
     return render(request, 'requerer/send_docs.html', context)

@@ -114,3 +114,20 @@ class Request(models.Model):
             self.slug = slugify_new(self.nome_completo)
         super().save(*args, **kwargs)
         return super().save(*args, **kwargs)
+
+
+class Documentos(models.Model):
+    requirement = models.OneToOneField(Request, on_delete=models.CASCADE)
+    foto_3x4 = models.ImageField(upload_to='documentos/foto_3x4/%M/')
+    rg_frente = models.ImageField(upload_to='documentos/rg_frente/%M/')
+    rg_verso = models.ImageField(upload_to='documentos/rg_verso/%M/')
+    cpf = models.ImageField(upload_to='documentos/cpf/%M/')
+    comprovante_residencia = models.ImageField(upload_to='documentos/comprovante_residencia/%M/')
+    comprovante_tipo_sanguineo = models.ImageField(upload_to='documentos/comprovante_tipo_sanguineo/%M/')
+    laudo_frente = models.ImageField(upload_to='documentos/laudo_frente/%M/')
+    laudo_verso = models.ImageField(upload_to='documentos/laudo_verso/%M/')
+    audiometria = models.ImageField(upload_to='documentos/audiometria/%M/', blank=True, null=True)
+    boletim_ocorrencia = models.ImageField(upload_to='documentos/boletim_ocorrencia/%M/', blank=True, null=True)
+
+    def __str__(self):
+        return f'Documentos de {self.requirement.nome_completo}'
