@@ -35,29 +35,29 @@ def new_request(request):
     }
 
     if request.method == "POST":
-        name = request.POST.get('full-name')
+        name = clean_space(request.POST.get('full-name'))
         cpf = request.POST.get('cpf')
         d_nascimento = request.POST.get('d-nascimento')
         sexo = request.POST.get('sexo')
         rg = request.POST.get('rg')
-        emissor = request.POST.get('emissor')
+        emissor = clean_space(request.POST.get('emissor'))
         uf_rg = request.POST.get('uf-rg')
-        l_nascimento = request.POST.get('l-nascimento')
+        l_nascimento = clean_space(request.POST.get('l-nascimento'))
         raca = request.POST.get('raca')
         sangue = request.POST.get('sangue')
-        n_mae = request.POST.get('n-mae')
-        n_pai = request.POST.get('n-pai')
+        n_mae = clean_space(request.POST.get('n-mae'))
+        n_pai = clean_space(request.POST.get('n-pai'))
         t_cid = request.POST.get('t-cid')
-        cid = request.POST.get('cid')
+        cid = clean_space(request.POST.get('cid'))
         deficiencia = request.POST.get('deficiencia')
         telefone = request.POST.get('telefone')
         cep = request.POST.get('cep')
-        logradouro = request.POST.get('logradouro')
+        logradouro = clean_space(request.POST.get('logradouro'))
         numero = request.POST.get('numero')
         cidade = request.POST.get('cidade')
-        bairro = request.POST.get('bairro')
+        bairro = clean_space(request.POST.get('bairro'))
         uf_endereco = request.POST.get('uf-endereco')
-        complemento = request.POST.get('complemento')
+        complemento = clean_space(request.POST.get('complemento'))
 
         if validate_cpf(cpf):
             try:
@@ -107,3 +107,25 @@ def new_request(request):
             })
 
     return render(request, 'requerer/new_request.html', context)
+
+
+@login_required(login_url="accounts:login")
+def send_docs(request, slug):
+
+    try:
+        requirement = Request.objects.get(slug=slug)
+    except Request.DoesNotExist:
+        return render(request, 'global/404.html', status='404')
+    
+    context = {
+        'page_settings': {
+            'title': 'Envio de documentos',
+        },
+        'requirement': requirement,
+
+    }
+    
+    if request.method == "POST":
+        pass
+
+    return render(request, 'requerer/send_docs.html', context)

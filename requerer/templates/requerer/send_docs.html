@@ -1,0 +1,81 @@
+{% extends "global/base.html" %}
+{% load static %}
+
+{% block additional_style %}
+    <link rel="stylesheet" href="{% static "requerer/css/send_docs.css" %}">
+    <link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet"/>
+{% endblock additional_style %}
+
+{% block content %}
+    <section id="new-request" class="full-page centralized-content">
+        <div class="main-content text-center">
+            <form class="form" method="POST" action="{% url "requerer:new_request" %}">
+                {% csrf_token %}
+                <p class="title">Envio de documentos</p>
+                <p class="message">Olá, {{requirement.nome_completo}}, Envie as fotos dos documentos para validação do seus dados.</p>
+
+                <label>
+                    <input required="" name="rg-frente" type="file" class="input" accept=".png, .jpeg, .jpg, .pdf">
+                    <span>RG frente</span>
+                </label>
+
+                <label>
+                    <input required="" name="rg-verso" type="file" class="input" accept=".png, .jpeg, .jpg, .pdf">
+                    <span>RG verso</span>
+                </label>
+
+                <label>
+                    <input required="" name="cpf" type="file" class="input" accept=".png, .jpeg, .jpg, .pdf">
+                    <span>CPF</span>
+                </label>
+
+                <label>
+                    <input required="" name="laudo-frente" type="file" class="input" accept=".png, .jpeg, .jpg, .pdf">
+                    <span>Laudo frente</span>
+                </label>
+
+                <label>
+                    <input required="" name="laudo-verso" type="file" class="input" accept=".png, .jpeg, .jpg, .pdf">
+                    <span>Laudo verso</span>
+                </label>
+                {% if requirement.deficiencia_tipo == "AUD" %}
+                    <label>
+                        <input required="" name="audiometria" type="file" class="input" accept=".png, .jpeg, .jpg, .pdf">
+                        <span>Audiometria</span>
+                    </label>
+                {% endif %}
+
+                <label>
+                    <input required="" name="comp-res" type="file" class="input" accept=".png, .jpeg, .jpg, .pdf">
+                    <span>Comprovante de residência</span>
+                </label>
+
+                <label>
+                    <input required="" name="tipo-sangue" type="file" class="input" accept=".png, .jpeg, .jpg, .pdf">
+                    <span>Tipo ssanguinêo + fator RH</span>
+                </label>
+
+                <label>
+                    <input required="" name="3x4" type="file" class="input" accept=".png, .jpeg, .jpg">
+                    <span>Foto 3x4</span>
+                </label>
+
+                <button class="submit">Enviar</button>
+            </form>
+        </div>
+    </section>
+
+    <div id="cropperModal" style="display:none;">
+        <div class="modal-content">
+            <div id="preview">
+                <img id="image" src="" alt="Picture">
+            </div>
+            <button id="cropButton">Cortar e Enviar</button>
+        </div>
+    </div>
+
+{% endblock content %}
+{% block additional_script %}
+    <script src="{% static 'requerer/js/send_docs.js' %}"></script>
+    <script src="https://unpkg.com/cropperjs/dist/cropper.js"></script>
+{% endblock additional_script %}
