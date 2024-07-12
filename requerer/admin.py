@@ -1,5 +1,5 @@
 from django.contrib import admin
-from requerer.models import Request
+from requerer.models import Request, Documents
 
 
 @admin.register(Request)
@@ -9,3 +9,11 @@ class RequestAdmin(admin.ModelAdmin):
     prepopulated_fields = {
         'slug': ('cpf',),
     }
+    list_per_page = 10
+
+
+@admin.register(Documents)
+class DocumentsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'requirement')
+    list_display_links = ('id', 'requirement')
+    list_per_page = 10

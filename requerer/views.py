@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from requerer.models import Request
 from utils.validators import validate_cpf
@@ -122,24 +122,40 @@ def send_docs(request, slug):
             'title': 'Envio de documentos',
         },
         'requirement': requirement,
+        'slug': slug
 
     }
     
     if request.method == "POST":
-        rg_frente = request.POST.get('rg-frente')
-        rg_verso = request.POST.get('rg-verso')
-        cpf = request.POST.get('cpf')
-        laudo_frente = request.POST.get('laudo-frente')
-        laudo_verso = request.POST.get('laudo-verso')
-        compr_res = request.POST.get('comp-res')
+        rg_frente = request.FILES.get('rg-frente')
+        rg_verso = request.FILES.get('rg-verso')
+        cpf = request.FILES.get('cpf')
+        laudo_frente = request.FILES.get('laudo-frente')
+        laudo_verso = request.FILES.get('laudo-verso')
+        compr_res = request.FILES.get('comp-res')
         audiometria = None
         if requirement.deficiencia_tipo == "AUD":
-            audiometria = request.POST.get('audiometria')
+            audiometria = request.FILES.get('audiometria')
         sangue = request.POST.get('tipo-sangue')
-        foto_3x4 = request.POST.get('3x4')
+        foto_3x4 = request.FILES.get('3x4')
 
+        docs = Documents(
+            requirement=requirement,
+            foto_3x4=foto_3x4,
+            rg_frente=rg_frente,
+            rg_verso=rg_verso,
+            cpf=cpf,
+            comprovante_residencia=compr_res,
+            laudo_frente=laudo_frente,
+            laudo_verso=laudo_verso,
+            audiometria=audiometria,
+            comprovante_tipo_sanguineo=sangue
+        )
 
-
-        
+        docs.save()
+        messages.success(request, 'Documentos enviados com sucesso!')
+        if requirement.deficiencia_tipo == "AUT":
+            pass
+        return redirect('requerer:home')
 
     return render(request, 'requerer/send_docs.html', context)
